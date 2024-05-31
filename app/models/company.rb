@@ -7,6 +7,12 @@ class Company < ApplicationRecord
 
   after_initialize :set_default_review_status, if: :new_record?
 
+  accepts_nested_attributes_for :documents # Allow nested attributes for documents
+
+  def pending_review?
+    review_status == 'pending'
+  end
+
   private
 
   def set_default_review_status

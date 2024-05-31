@@ -1,0 +1,48 @@
+<!-- app/views/companies/show.html.erb -->
+<h1><%= @company.legal_name %></h1>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th>Legal Name:</th>
+      <td><%= @company.legal_name %></td>
+    </tr>
+    <tr>
+      <th>Address:</th>
+      <td><%= @company.address %></td>
+    </tr>
+    <tr>
+      <th>Email:</th>
+      <td><%= @company.email %></td>
+    </tr>
+    <tr>
+      <th>Primary Phone:</th>
+      <td><%= @company.primary_phone %></td>
+    </tr>
+    <tr>
+      <th>Primary Contact Name:</th>
+      <td><%= @company.primary_contact_name %></td>
+    </tr>
+    <% if current_user.compliance_officer? %>
+      <tr>
+        <th>Review Status:</th>
+        <td><%= @company.review_status %></td>
+      </tr>
+      <tr>
+        <th>Actions:</th>
+        <td>
+          <%= link_to 'Back', companies_path, class: 'btn btn-sm btn-secondary' %>
+          <% if @company.pending_review? %>
+           <%= button_to 'Approve', approve_company_path(@company), method: :patch, class: 'btn btn-sm btn-success' %>
+            <%= button_to 'Reject', reject_company_path(@company), method: :patch, class: 'btn btn-sm btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
+    <% else %>
+      <tr>
+        <th colspan="2">Actions:</th>
+        <td><%= link_to 'Back', root_path, class: 'btn btn-sm btn-secondary' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
