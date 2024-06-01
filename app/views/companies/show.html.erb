@@ -1,48 +1,81 @@
 <!-- app/views/companies/show.html.erb -->
-<h1><%= @company.legal_name %></h1>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card mt-4">
+        <div class="card-header">
+          <h5 class="card-title">Company Details</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Legal Name:</strong> <%= @company.legal_name %></li>
+            <li class="list-group-item"><strong>Director Name:</strong> <%= @company.director_name %></li>
+            <li class="list-group-item"><strong>Director Designation:</strong> <%= @company.director_designation %></li>
+            <li class="list-group-item"><strong>Director Contact:</strong> <%= @company.director_contact %></li>
+            <li class="list-group-item"><strong>Address:</strong> <%= @company.address %></li>
+            <li class="list-group-item"><strong>Email:</strong> <%= @company.email %></li>
+            <li class="list-group-item"><strong>Primary Phone:</strong> <%= @company.primary_phone %></li>
+            <li class="list-group-item"><strong>Primary Contact Name:</strong> <%= @company.primary_contact_name %></li>
+            <li class="list-group-item"><strong>Primary Contact Phone:</strong> <%= @company.primary_contact_phone %></li>
+          </ul>
+        </div>
+      </div>
 
-<table class="table">
-  <tbody>
-    <tr>
-      <th>Legal Name:</th>
-      <td><%= @company.legal_name %></td>
-    </tr>
-    <tr>
-      <th>Address:</th>
-      <td><%= @company.address %></td>
-    </tr>
-    <tr>
-      <th>Email:</th>
-      <td><%= @company.email %></td>
-    </tr>
-    <tr>
-      <th>Primary Phone:</th>
-      <td><%= @company.primary_phone %></td>
-    </tr>
-    <tr>
-      <th>Primary Contact Name:</th>
-      <td><%= @company.primary_contact_name %></td>
-    </tr>
-    <% if current_user.compliance_officer? %>
-      <tr>
-        <th>Review Status:</th>
-        <td><%= @company.review_status %></td>
-      </tr>
-      <tr>
-        <th>Actions:</th>
-        <td>
-          <%= link_to 'Back', companies_path, class: 'btn btn-sm btn-secondary' %>
-          <% if @company.pending_review? %>
-           <%= button_to 'Approve', approve_company_path(@company), method: :patch, class: 'btn btn-sm btn-success' %>
-            <%= button_to 'Reject', reject_company_path(@company), method: :patch, class: 'btn btn-sm btn-danger' %>
-          <% end %>
-        </td>
-      </tr>
-    <% else %>
-      <tr>
-        <th colspan="2">Actions:</th>
-        <td><%= link_to 'Back', root_path, class: 'btn btn-sm btn-secondary' %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <div class="card mt-4">
+        <div class="card-header">
+          <h5 class="card-title">Documents</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Certificate of Incorporation:</strong>
+              <% if @company.certificate_of_incorporation.attached? %>
+                <%= link_to 'View Document', rails_blob_path(@company.certificate_of_incorporation, disposition: 'attachment') %>
+              <% else %>
+                No document attached
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <strong>GST Certificate:</strong>
+              <% if @company.gst_certificate.attached? %>
+                <%= link_to 'View Document', rails_blob_path(@company.gst_certificate, disposition: 'attachment') %>
+              <% else %>
+                No document attached
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <strong>PAN Document:</strong>
+              <% if @company.pan_document.attached? %>
+                <%= link_to 'View Document', rails_blob_path(@company.pan_document, disposition: 'attachment') %>
+              <% else %>
+                No document attached
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <%= link_to 'Back', companies_path, class: 'btn btn-secondary' %>
+        <% if current_user.compliance_officer? && @company.pending_review? %>
+          <div class="btn-group" role="group" aria-label="Accept or Reject">
+            <%= button_to 'Accept', approve_company_path(@company), method: :patch, class: 'btn btn-success me-2' %>
+            <!-- Reject button toggles the rejection form -->
+            <%= button_tag 'Reject', type: 'button', class: 'btn btn-danger', onclick: "document.getElementById('rejection-form').style.display='block'" %>
+          </div>
+
+          <!-- Hidden rejection form -->
+          <div id="rejection-form" style="display:none; margin-top: 20px;">
+            <%= form_with url: reject_company_path(@company), method: :patch, local: true do |form| %>
+              <div class="mb-3">
+                <%= form.label :rejection_reason, 'Please provide the reason for rejection' %>
+                <%= form.text_area :rejection_reason, class: 'form-control' %>
+              </div>
+              <%= form.submit 'Submit', class: 'btn btn-danger' %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

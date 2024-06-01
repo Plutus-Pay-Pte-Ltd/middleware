@@ -1,7 +1,7 @@
-<%= form_with(model: @company, local: true) do |form| %>
+<%= form_with(model: @company, local: true, html: { multipart: true }) do |form| %>
   <% if @company.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Errors prohibited this company from being saved:</h4>
       <ul>
         <% @company.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,50 +10,82 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :legal_name %>
-    <%= form.text_field :legal_name %>
-  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :legal_name, class: "form-label" %>
+        <%= form.text_field :legal_name, class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address %>
-  </div>
+      <div class="mb-3">
+        <%= form.label :director_name, class: "form-label" %>
+        <%= form.text_field :director_name, class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.email_field :email %>
-  </div>
+      <div class="mb-3">
+        <%= form.label :director_designation, class: "form-label" %>
+        <%= form.text_field :director_designation, class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= form.label :primary_phone %>
-    <%= form.telephone_field :primary_phone %>
-  </div>
+      <div class="mb-3">
+        <%= form.label :director_contact, class: "form-label" %>
+        <%= form.text_field :director_contact, class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= form.label :primary_contact_name %>
-    <%= form.text_field :primary_contact_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :primary_contact_phone %>
-    <%= form.telephone_field :primary_contact_phone %>
-  </div>
-
-  <h3>Documents</h3>
-  <%= form.fields_for :documents do |document_fields| %>
-    <div class="field">
-      <%= document_fields.label :doc_type %>
-      <%= document_fields.text_field :doc_type %>
+      <div class="mb-3">
+        <%= form.label :address, class: "form-label" %>
+        <%= form.text_field :address, class: "form-control" %>
+      </div>
     </div>
 
-    <div class="field">
-      <%= document_fields.label :file %>
-      <%= document_fields.file_field :file %>
-    </div>
-  <% end %>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :email, class: "form-label" %>
+        <%= form.email_field :email, class: "form-control" %>
+      </div>
 
-  <div class="actions">
-    <%= form.submit %>
+      <div class="mb-3">
+        <%= form.label :primary_phone, class: "form-label" %>
+        <%= form.telephone_field :primary_phone, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :primary_contact_name, class: "form-label" %>
+        <%= form.text_field :primary_contact_name, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :primary_contact_phone, class: "form-label" %>
+        <%= form.telephone_field :primary_contact_phone, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mb-3">Documents</h3>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= form.label :certificate_of_incorporation, class: "form-label" %>
+        <%= form.file_field :certificate_of_incorporation, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= form.label :gst_certificate, class: "form-label" %>
+        <%= form.file_field :gst_certificate, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= form.label :pan_document, class: "form-label" %>
+        <%= form.file_field :pan_document, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-end mt-4">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

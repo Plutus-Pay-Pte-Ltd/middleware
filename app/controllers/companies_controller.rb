@@ -13,15 +13,20 @@ class CompaniesController < ApplicationController
 
   def new
     @company = Company.new
-    @company.documents.build
   end
 
   def create
-    @company = Company.new(company_params)
-    unless @company.save
-      render :new
-    else
+    temporary_password = SecureRandom.hex(8)
+
+    @user = User.new(email: company_params[:email], role: 0, password: temporary_password)
+    @company = @user.build_company(company_params)
+
+    if @user.save && @company.save
+      flash[:notice] = 'Company was successfully created.'
       redirect_to root_path
+    else
+      flash[:alert] = 'Failed to create company. Please try again.'
+      render :new
     end
   end
 
@@ -41,15 +46,20 @@ class CompaniesController < ApplicationController
     redirect_to companies_url, notice: 'Company was successfully destroyed.'
   end
 
-  def approve
-    @company = Company.find(params[:id])
+  def approve    
+    password = SecureRandom.hex(8)
+
     @company.update(review_status: 'approved')
+    @company.user.update(password: password)
+    CompanyMailer.approval_notification(@company.user.email, password).deliver_now
+
     redirect_to @company
   end
 
   def reject
-    @company.update(review_status: 'rejected')
-    # Additional logic for rejecting the company (e.g., send notification with reasons)
+    rejection_reason = params[:rejection_reason]
+    @company.update(review_status: 'rejected', rejection_reason:)
+    CompanyMailer.rejection_email(@company, rejection_reason).deliver_now
     redirect_to companies_path, notice: 'Company rejected.'
   end
 
@@ -61,8 +71,10 @@ class CompaniesController < ApplicationController
 
   def company_params
     params.require(:company).permit(
-      :legal_name, :address, :email, :primary_phone, :primary_contact_name, :primary_contact_phone,
-      documents_attributes: [:doc_type, :file] # Permit nested attributes for documents
+      :legal_name, :director_name, :director_designation, :director_contact,
+      :certificate_of_incorporation, :gst_certificate, :pan_document,
+      :address, :email, :primary_phone, :primary_contact_name, :primary_contact_phone,
+      documents_attributes: [:doc_type, :file]
     )
-  end  
+  end 
 end

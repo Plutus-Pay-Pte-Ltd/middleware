@@ -1,35 +1,24 @@
 <!-- app/views/companies/index.html.erb -->
-<h1 class="text-center mt-4 mb-5">Company Index Page</h1>
-
 <div class="container">
-  <%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger mb-4 float-end' %>
-
+  <h1 class="text-center mt-5 mb-4">Company Index Page</h1>
+  
   <div class="row row-cols-1 row-cols-md-2 g-4">
     <% @companies.each do |company| %>
-      <div class="col">
-        <div class="card h-100 shadow-sm">
+      <div class="col mb-4">
+        <div class="card shadow">
           <div class="card-body">
-            <h5 class="card-title"><%= company.legal_name %></h5>
-            <p class="card-text"><%= company.address %></p>
-            <p class="card-text"><%= company.email %></p>
-            <p class="card-text"><%= company.primary_phone %></p>
-            <p class="card-text"><%= company.primary_contact_name %></p>
+            <h5 class="card-title mb-4"><%= company.legal_name %></h5>
+            <p class="card-text"><strong>Address:</strong> <%= company.address %></p>
+            <p class="card-text"><strong>Email:</strong> <%= company.email %></p>
+            <p class="card-text"><strong>Primary Phone:</strong> <%= company.primary_phone %></p>
+            <p class="card-text"><strong>Primary Contact Name:</strong> <%= company.primary_contact_name %></p>
+            <p class="card-text"><strong>Status:</strong> <%= company.review_status.capitalize %></p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <%= link_to 'View', company, class: 'btn btn-primary btn-sm me-md-2' %>
-              <% if current_user.compliance_officer? %>
-                <%= link_to 'Approve', approve_company_path(company), method: :put, class: 'btn btn-success btn-sm me-md-2' %>
-                <%= link_to 'Reject', reject_company_path(company), method: :put, class: 'btn btn-danger btn-sm' %>
-              <% end %>
             </div>
           </div>
         </div>
       </div>
     <% end %>
   </div>
-
-  <% if current_user.compliance_officer? %>
-    <div class="text-end mt-4">
-      <%= link_to 'New Company', new_company_path, class: 'btn btn-primary' %>
-    </div>
-  <% end %>
 </div>
