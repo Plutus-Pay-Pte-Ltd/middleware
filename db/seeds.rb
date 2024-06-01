@@ -7,3 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+User.create!(
+  role: 'compliance_officer',
+  email: 'complianceuser@yopmail.com',
+  password: 'password1!' # You can generate a secure password using SecureRandom if needed
+)

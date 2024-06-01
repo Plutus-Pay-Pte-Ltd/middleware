@@ -1,0 +1,91 @@
+<%= form_with(model: @company, local: true, html: { multipart: true }) do |form| %>
+  <% if @company.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Errors prohibited this company from being saved:</h4>
+      <ul>
+        <% @company.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :legal_name, class: "form-label" %>
+        <%= form.text_field :legal_name, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :director_name, class: "form-label" %>
+        <%= form.text_field :director_name, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :director_designation, class: "form-label" %>
+        <%= form.text_field :director_designation, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :director_contact, class: "form-label" %>
+        <%= form.text_field :director_contact, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :address, class: "form-label" %>
+        <%= form.text_field :address, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :email, class: "form-label" %>
+        <%= form.email_field :email, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :primary_phone, class: "form-label" %>
+        <%= form.telephone_field :primary_phone, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :primary_contact_name, class: "form-label" %>
+        <%= form.text_field :primary_contact_name, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :primary_contact_phone, class: "form-label" %>
+        <%= form.telephone_field :primary_contact_phone, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mb-3">Documents</h3>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= form.label :certificate_of_incorporation, class: "form-label" %>
+        <%= form.file_field :certificate_of_incorporation, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= form.label :gst_certificate, class: "form-label" %>
+        <%= form.file_field :gst_certificate, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= form.label :pan_document, class: "form-label" %>
+        <%= form.file_field :pan_document, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-end mt-4">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
