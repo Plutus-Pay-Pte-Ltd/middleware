@@ -1,33 +1,26 @@
 # Know Your Business
 
-## Description
-
 Know Your Business (KYB) is a web application designed to streamline the Know Your Customer (KYC) process for businesses. It allows companies to submit their information and required documents electronically for verification. Compliance officers can then review and approve/reject these submissions.
 
 ## SETUP
 
-1. Clone the repository to your local machine:
+1. Install dependencies:
 
   ```bash
-  git clone <repository-url>
-  
-2. Install dependencies:
+    bundle install
+  ```
+2. Set up the database:
 
   ```bash
-   bundle install
-
-3. Set up the database:
-
-   ```bash
-  rails db:setup
-
+    rails db:setup
+  ```
 # Usage
 
 1. Start the Rails server:
 
   ```bash
     rails server
-
+  ```
 2. Navigate to http://localhost:3000 in your web browser to access the application.
 
 3. Register as a company or a compliance officer, depending on your role.
@@ -42,6 +35,7 @@ Know Your Business (KYB) is a web application designed to streamline the Know Yo
 Run the RSpec tests to ensure everything is functioning correctly:
 
   ```bash
-  bundle exec rspec
+    bundle exec rspec
+  ```
 
  
