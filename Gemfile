@@ -13,6 +13,7 @@ gem "sqlite3", "~> 1.4"
 
 # Web server
 gem "puma", ">= 5.0"
+gem 'jwt'
 
 # JavaScript
 gem "importmap-rails"
@@ -43,7 +44,7 @@ gem "tzinfo-data", platforms: %i[windows jruby]
 
 # Speed up boot times
 gem "bootsnap", require: false
-
+gem 'rack-cors'
 group :development, :test do
   # RSpec for testing
   gem 'rspec-rails'

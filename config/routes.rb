@@ -1,4 +1,25 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :companies do
+        member do
+          patch :approve
+          patch :reject
+        end
+      end
+      resources :users, only: [:index, :destroy] do
+        collection do
+          post :set_password
+          patch :update_password
+        end
+      end
+      resources :sessions, only: [:create] do
+        delete :destroy, on: :collection
+      end
+    end
+  end
+
+ 
   root 'companies#new'
   resources :companies do
     member do
