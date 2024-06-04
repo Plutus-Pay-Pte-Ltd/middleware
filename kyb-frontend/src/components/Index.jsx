@@ -76,7 +76,7 @@ const CompanyForm = () => {
                 </div>
               )}
               <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <div class="row">
+                <div className="row">
                   <div className="mb-3">
                     <label htmlFor="legal_name" className="form-label">Legal Name</label>
                     <input
@@ -178,9 +178,9 @@ const CompanyForm = () => {
                   </div>
                 </div>
                
-                <h3 class="mb-3">Documents</h3>
-                <div class="row">
-                  <div class="col-md-4">
+                <h3 className="mb-3">Documents</h3>
+                <div className="row">
+                  <div className="col-md-4">
                     <div className="mb-3">
                       <label htmlFor="certificate_of_incorporation" className="form-label">Certificate of Incorporation</label>
                       <input
@@ -193,7 +193,7 @@ const CompanyForm = () => {
                     </div>
                   </div>  
 
-                  <div class="col-md-4">
+                  <div className="col-md-4">
                     <div className="mb-3">
                       <label htmlFor="gst_certificate" className="form-label">GST Certificate</label>
                       <input
@@ -206,7 +206,7 @@ const CompanyForm = () => {
                     </div>
                   </div>  
 
-                  <div class="col-md-4">
+                  <div className="col-md-4">
                     <div className="mb-3">
                       <label htmlFor="pan_document" className="form-label">Pan Document</label>
                       <input

@@ -1,9 +1,12 @@
 // Header.jsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = ({ userSignedIn, handleLogout }) => {
+const Header = ({ userSignedIn, handleLogout }) => { 
+
+  const token = localStorage.getItem('token');
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -15,13 +18,13 @@ const Header = ({ userSignedIn, handleLogout }) => {
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               {userSignedIn ? (
-                <Link to="/companies" className="nav-link">Home</Link>
+                <Link to="/company-list" className="nav-link">Home</Link>
               ) : (
                 <Link to="/" className="nav-link">Home</Link>
               )}
             </li>
             <li className="nav-item">
-              {userSignedIn ? (
+              {token ? (
                 <button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button>
               ) : (
                 <Link to="/login" className="nav-link">Login</Link>

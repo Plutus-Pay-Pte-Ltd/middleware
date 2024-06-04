@@ -10,7 +10,7 @@ export const login = (credentials) => {
 
 // Function to log out a user
 export const logout = () => {
-  return axios.delete(`${API_URL}/sessions/destroy`);
+  return axios.delete(`${API_URL}/sessions`);
 };
 
 // Add more API functions as needed

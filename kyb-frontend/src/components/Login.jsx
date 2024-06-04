@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -15,7 +16,7 @@ const Login = () => {
     })
       .then(response => {
         localStorage.setItem('token', response.data.token);
-        window.location.href = '/company-list';
+        history.push('/company-list');
       })
       .catch(error => {
         setError('Invalid email or password. Please try again.');
@@ -32,7 +33,7 @@ const Login = () => {
               <h1 className="card-title text-center mb-4">Login</h1>
 
               {error && <p className="text-danger text-center">{error}</p>}
-              
+
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">Email</label>

@@ -2,7 +2,7 @@
 module Api
   module V1
     class SessionsController < ApplicationController
-      skip_before_action :authenticate_request, only: %i[create]
+      skip_before_action :authenticate_request, only: %i[create destroy]
       # protect_from_forgery with: :null_session
 
       def create
