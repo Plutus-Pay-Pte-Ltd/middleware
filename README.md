@@ -39,3 +39,6 @@ Run the RSpec tests to ensure everything is functioning correctly:
   ```
 
  
+# API Collection
+
+https://www.postman.com/deqode/workspace/ss/collection/28881076-77ed742d-43ad-451a-be08-5e9368e51a3d?action=share&creator=28881076
